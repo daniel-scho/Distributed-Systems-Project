@@ -12,14 +12,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeoutException;
 
 public class MessagingQueueApplication {
-
-    private final static String QUEUE_1 = "QUEUE_1";
-    private final static String QUEUE_2 = "QUEUE_2";
-    private final static String QUEUE_3 = "QUEUE_3";
-    private final static String QUEUE_4 = "QUEUE_4";
+    private final static String QUEUE_1 = "DataCollectionDispatcher";
+    private final static String QUEUE_2 = "DataCollectionDispatcher_Out";
+    private final static String QUEUE_3 = "StationDataCollector_In";
+    private final static String QUEUE_4 = "StationDataCollector_Out";
     private final static String QUEUE_5 = "QUEUE_5";
     private final static String QUEUE_6 = "QUEUE_6";
-
 
     private static CountDownLatch latch;
 
@@ -34,12 +32,6 @@ public class MessagingQueueApplication {
              Channel channel = connection.createChannel();
              Channel publishChannel = connection.createChannel()) {
 
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.println(" [~] Enter text: ");
-            String message = scanner.nextLine();
-            int messageLength = message.length();
-
             channel.queueDeclare(QUEUE_1, false, false, false, null);
             channel.queueDeclare(QUEUE_2, false, false, false, null);
             channel.queueDeclare(QUEUE_3, false, false, false, null);
@@ -47,7 +39,7 @@ public class MessagingQueueApplication {
             channel.queueDeclare(QUEUE_5, false, false, false, null);
             channel.queueDeclare(QUEUE_6, false, false, false, null);
 
-
+            String message = "123";
             publishMessage(publishChannel, QUEUE_1, message);
 
 

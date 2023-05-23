@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS station (
    lng REAL NOT NULL
 );
 
-INSERT INTO customer(id, db_url)
+INSERT INTO station(id, db_url, lat, lng)
 VALUES 
 	(1, 'localhost:30011', '48.184192', '16.378604'),
    (2, 'localhost:30012', '48.186116', '16.377746'),

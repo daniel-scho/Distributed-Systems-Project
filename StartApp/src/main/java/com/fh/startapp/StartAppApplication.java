@@ -21,9 +21,9 @@ public class StartAppApplication {
         String query = "SELECT * FROM customer";
 
         try (
-                Connection conn = Database.getConnection();
-                PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet rs = ps.executeQuery();
+            Connection conn = Database.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
         ) {
             //ps.setInt(1, 1);
             while (rs.next()) {
@@ -55,14 +55,7 @@ public class StartAppApplication {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
             System.out.println("[x] Finished " + message);
-
-
         };
     }
-
-
-
-
 }

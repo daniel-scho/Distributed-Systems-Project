@@ -1,18 +1,20 @@
 package com.fh.datacollectiondispatcher;
 
-import org.flywaydb.core.Flyway;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.fh.datacollectiondispatcher.services.Database;
+import com.fh.datacollectiondispatcher.services.Queue;
 
-@SpringBootApplication
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
+
 public class DataCollectionDispatcherApplication {
 
-	public static void main(String[] args) {
-		Flyway flyway = Flyway.configure()
-				.load();
-		flyway.migrate();
+	public static void main(String[] args) throws IOException, TimeoutException, SQLException {
+		Database db = new Database();
+		Queue queue = new Queue(db);
 
-		SpringApplication.run(DataCollectionDispatcherApplication.class, args);
+		while(true) {
+			queue.executeQueue();
+		}
 	}
-
 }

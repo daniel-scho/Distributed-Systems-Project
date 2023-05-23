@@ -15,8 +15,8 @@ import java.util.concurrent.TimeoutException;
 @SpringBootApplication
 public class StationDataCollectorApplication {
 
-	private final static String QUEUE_NAME = "QUEUE_1";
-	private final static String QUEUE_NAME_OUT = "QUEUE_2";
+	private final static String QUEUE_NAME = "DataCollectionDispatcher_In";
+	private final static String QUEUE_NAME_OUT = "DataCollectionDispatcher_Out";
 
 
 	public static void main(String[] args) throws IOException, TimeoutException {
@@ -25,8 +25,9 @@ public class StationDataCollectorApplication {
 		factory.setPort(30003);
 
 		Connection connection = factory.newConnection();
-		 Channel consumeChannel = connection.createChannel();
-		 Channel publishChannel = connection.createChannel();
+
+		Channel consumeChannel = connection.createChannel();
+		Channel publishChannel = connection.createChannel();
 
 		consumeChannel.queueDeclare(QUEUE_NAME, false, false, false, null);
 		consumeChannel.queueDeclare(QUEUE_NAME_OUT, false, false, false, null);

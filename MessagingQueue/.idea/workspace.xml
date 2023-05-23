@@ -4,26 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e6f2931-3b46-44f8-81df-e97d44825551" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/flyway.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/resources/db/migration/v1_initTables.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/amqp-client-5.16.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fh/queue/MessagingQueueApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/slf4j-api-1.7.36.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/slf4j-simple-1.7.36.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StartApp/src/main/java/com/fh/startapp/Database.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StartApp/src/main/java/com/fh/startapp/dto/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/StationDataCollector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/dto/StationData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/services/Database.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/services/Queue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+    <list default="true" id="5e6f2931-3b46-44f8-81df-e97d44825551" name="Changes" comment="Initial project setup for queue, station data collector, data collection receiver, pdf generator">
+      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/dto/Station.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/services/Database.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/services/DatabaseQueryExecuter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/services/Queue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_9_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_9_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_4_8_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_5_3_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DataCollectionDispatcher/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/DataCollectionDispatcherApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DataCollectionDispatcher/src/main/java/com/fh/datacollectiondispatcher/DataCollectionDispatcherApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Excercise-5-Scaling-wi21b056.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fh/queue/MessagingQueueApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fh/queue/MessagingQueueApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../StartApp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../StartApp/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../StartApp/src/main/java/com/fh/startapp/StartAppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../StartApp/src/main/java/com/fh/startapp/StartAppApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/StationDataCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/StationDataCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/StationDataCollectorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/StationDataCollectorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/services/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../StationDataCollector/src/main/java/com/fh/stationdatacollector/services/Queue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../station_1_db/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../station_1_db/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../station_2_db/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../station_2_db/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../station_3_db/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../station_3_db/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../stations_db/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../stations_db/init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +49,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "private",
-    "last_opened_file_path": "C:/Users/Danie/Documents/repos/Studium/DistributedSystemsProject",
+    "last_opened_file_path": "C:/Users/Danie/Documents/repos/Studium/DistributedSystemsProject/MessagingQueue",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -92,8 +93,17 @@
       <updated>1683753915189</updated>
       <workItem from="1683753917455" duration="2923000" />
       <workItem from="1683844143000" duration="283000" />
-      <workItem from="1684067457306" duration="19248000" />
+      <workItem from="1684067457306" duration="20422000" />
+      <workItem from="1684539198790" duration="10816000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial project setup for queue, station data collector, data collection receiver, pdf generator">
+      <created>1684229658011</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684229658011</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,5 +119,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial project setup for queue, station data collector, data collection receiver, pdf generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial project setup for queue, station data collector, data collection receiver, pdf generator" />
   </component>
 </project>

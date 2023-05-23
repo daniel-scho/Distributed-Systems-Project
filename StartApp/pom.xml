@@ -33,13 +33,15 @@
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.16.0</version>
+        </dependency>
     </dependencies>
 
-    <dependency>
-        <groupId>com.rabbitmq</groupId>
-        <artifactId>amqp-client</artifactId>
-        <version>5.16.0</version>
-    </dependency>
+
     <build>
         <plugins>
             <plugin>
