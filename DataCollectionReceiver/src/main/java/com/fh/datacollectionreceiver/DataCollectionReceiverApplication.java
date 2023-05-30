@@ -7,6 +7,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+import queue.DataCollectionReceiverConsumer;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -15,9 +16,26 @@ import java.util.concurrent.TimeoutException;
 @SpringBootApplication
 public class DataCollectionReceiverApplication {
 
-	private final static String QUEUE_NAME = "QUEUE_3";
-	private final static String QUEUE_NAME_OUT = "QUEUE_4";
+	//private final static String QUEUE_NAME = "QUEUE_3";
+	//private final static String QUEUE_NAME_OUT = "QUEUE_4";
 
+
+	private final DataCollectionReceiverConsumer consumerqueue = new DataCollectionReceiverConsumer();
+
+	public static void main(String[] args) {
+		SpringApplication.run(DataCollectionReceiverApplication.class, args);
+		DataCollectionReceiverApplication receiverApplication = new DataCollectionReceiverApplication();
+		receiverApplication.executeDataCollectionReceiverQueue();
+	}
+
+	public void executeDataCollectionReceiverQueue() {
+		try {
+			consumerqueue.executeDataCollectionReceiverQueue(null);
+		} catch (Exception e) {
+			System.out.println("Error occurred: " + e.getMessage());
+		}
+	}
+/*
 
 	public static void main(String[] args) throws IOException, TimeoutException {
 		ConnectionFactory factory = new ConnectionFactory();
@@ -71,5 +89,5 @@ public class DataCollectionReceiverApplication {
 			}
 		}
 		return result.toString();
-	}
+	}*/
 }
