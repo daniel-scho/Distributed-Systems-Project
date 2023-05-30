@@ -5,9 +5,9 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 public class DataCollectionDispatcherConsumer {
-    private final static String QUEUE_toDispatcher = "DataCollectionDispatcherQueue";
+    private final String QUEUE_toDispatcher = "DataCollectionDispatcherQueue";
 
-    public static void main(String[] argv) throws Exception {
+    public void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();

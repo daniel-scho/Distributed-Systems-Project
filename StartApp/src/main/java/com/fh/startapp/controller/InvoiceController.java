@@ -1,6 +1,7 @@
 package com.fh.startapp.controller;
 
-import com.fh.startapp.dto.InvoiceData;
+
+import com.fh.startapp.queue.Send;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,9 @@ public class InvoiceController {
      * @return
      */
     @GetMapping("/invoice/{customer_id}")
-    public String currentTemperature(@PathVariable String customer_id) {
+    public String getCustomerID(@PathVariable String customer_id) throws Exception {
+        Send sendqueue = new Send();
+        sendqueue.executeSendQueue(customer_id);
         return "It is 25 degrees in " + customer_id;
     }
 
@@ -25,9 +28,9 @@ public class InvoiceController {
      * with the attributes of the class WheaterData
      * return: A string is outputed summarizing the inputed data
      * (Tested with Insomnia)
-     */
+
     @PostMapping("/invoice")
     public String receiveData(@RequestBody InvoiceData invoice) {
         return "Id: " + invoice.id;
-    }
+    }*/
 }
