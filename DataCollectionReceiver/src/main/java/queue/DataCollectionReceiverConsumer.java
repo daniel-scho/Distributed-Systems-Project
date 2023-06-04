@@ -1,10 +1,10 @@
 package queue;
 import com.rabbitmq.client.*;
 public class DataCollectionReceiverConsumer {
-    private final static String QUEUE_TO_DATA_COLLECTION_RECEIVER = "DataCollectionReceiverQueue";
-    private final static String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
+    private final String QUEUE_TO_DATA_COLLECTION_RECEIVER = "DataCollectionReceiverQueue";
+    private final String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
 
-    public static void main(String[] argv) throws Exception {
+    public void executeDataCollectionReceiverQueue(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();

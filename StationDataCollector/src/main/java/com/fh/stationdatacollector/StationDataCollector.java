@@ -1,20 +1,23 @@
 package com.fh.stationdatacollector;
-
+/*
 import com.fh.stationdatacollector.dto.StationData;
 import com.fh.stationdatacollector.services.Database;
 import com.fh.stationdatacollector.services.Queue;
+*/
+
+import queue.StationDataCollectorProducer;
 
 import java.util.List;
 
 public class StationDataCollector {
 
-    private Database database;
-    private Queue queue;
-    public StationDataCollector(Database database, Queue queue) {
-        this.database = database;
-        this.queue = queue;
+    private StationDataCollectorProducer queueSender;
+    public StationDataCollector( StationDataCollectorProducer queueSender) {
+       // this.database = database;
+        this.queueSender = queueSender;
     }
-
+/*
+    private Database database;
     public int getTotalKwhForCustomer(int id) {
         List<StationData> stationData = database.getAllStationData();
 
@@ -23,6 +26,6 @@ public class StationDataCollector {
                 .mapToInt(StationData::getKwh)
                 .sum();
     }
-
+*/
 
 }

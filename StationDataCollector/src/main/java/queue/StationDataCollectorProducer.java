@@ -6,9 +6,10 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
 public class StationDataCollectorProducer {
-    private final static String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
+    private final String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
 
-    public static void main(String[] argv) throws Exception {
+
+    public void executeDataCollectiontoReceiverQueue() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
@@ -31,14 +32,14 @@ public class StationDataCollectorProducer {
         connection.close();
     }
 
-    private static String gatherData(String customerId, int chargingStationId) {
+    private  String gatherData(String customerId, int chargingStationId) {
         // Hier können die Daten für den Kunden von der Ladestation gesammelt werden
         // Dummy-Daten für Beispielzwecke
         String data = "Data for Customer " + customerId + " from Charging Station " + chargingStationId;
         return data;
     }
 
-    private static void sendToDataCollectionReceiver(Channel channel, String data) throws Exception {
+    private void sendToDataCollectionReceiver(Channel channel, String data) throws Exception {
         // Senden der Daten an den DataCollectionReceiver
         channel.basicPublish("", QUEUE_COLLECTOR_TO_RECEIVER, null, data.getBytes());
         System.out.println(" [x] Sent to DataCollectionReceiver: '" + data + "'");

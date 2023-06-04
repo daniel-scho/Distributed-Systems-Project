@@ -2,10 +2,12 @@ package queue;
 
 import com.rabbitmq.client.*;
 
-public class StationDataCollectorConsumer {
-    private final static String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollectorQueue";
+import java.nio.charset.StandardCharsets;
 
-    public static void main(String[] argv) throws Exception {
+public class StationDataCollectorConsumer {
+    private final String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollectorQueue";
+
+    public void executeStationDataCollectorQueue() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
@@ -20,7 +22,7 @@ public class StationDataCollectorConsumer {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
                     throws java.io.IOException {
-                String message = new String(body, "UTF-8");
+                String message = new String(body, StandardCharsets.UTF_8);
                 System.out.println("Received message from Station Data Collector: '" + message + "'");
                 // Weitere Verarbeitung der Nachricht hier möglich
             }
@@ -29,4 +31,5 @@ public class StationDataCollectorConsumer {
         // Registrieren des Consumers, um Nachrichten von der Queue zu empfangen
         channel.basicConsume(QUEUE_TO_STATION_DATA_COLLECTOR, true, consumer);
     }
+
 }

@@ -4,10 +4,10 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
 public class DataCollectionDispatcherProducer {
-    private final static String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollectorQueue";
-    private final static String QUEUE_TO_DATA_COLLECTION_RECEIVER = "DataCollectionReceiverQueue";
+    private final String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollectorQueue";
+    private final String QUEUE_TO_DATA_COLLECTION_RECEIVER = "DataCollectionReceiverQueue";
 
-    public static void main(String[] argv) throws Exception {
+    public void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
@@ -26,7 +26,7 @@ public class DataCollectionDispatcherProducer {
         connection.close();
     }
 
-    private static void startDataGatheringJob(Channel channel) throws Exception {
+    private void startDataGatheringJob(Channel channel) throws Exception {
         int numberOfDatabases = 5;
 
         // Sendet eine Nachricht für jede Ladestation an den Station Data Collector
