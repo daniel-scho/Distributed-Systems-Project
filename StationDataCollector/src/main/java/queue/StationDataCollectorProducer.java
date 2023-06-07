@@ -8,6 +8,8 @@ import com.rabbitmq.client.Channel;
 public class StationDataCollectorProducer {
     private final String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
 
+    public StationDataCollectorProducer() {
+    }
 
     public void executeDataCollectiontoReceiverQueue() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();

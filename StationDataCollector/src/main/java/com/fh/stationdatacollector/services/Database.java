@@ -12,11 +12,10 @@ public class Database {
     public final static String DATABASE_NAME = "stationdb";
 
     public Database(String HOST_PORT) {
-        HOST_PORT = HOST_PORT;
+        this.HOST_PORT = HOST_PORT;
     }
 
     public static Connection getConnection() throws SQLException {
-
         return DriverManager.getConnection(getURL());
     }
 
@@ -24,7 +23,7 @@ public class Database {
         // jdbc:DRIVER://HOST:PORT/DATABASE_NAME?user=USERNAME&password=PASSWORD
         // return "jdbc." + this.DRIVER +
         return String.format(
-                "jdbc:%s://%s:%s/%s?user=%s&password=%s",
+                "jdbc:%s://%s/%s?user=%s&password=%s",
                 DRIVER,
                 HOST_PORT,
                 DATABASE_NAME,

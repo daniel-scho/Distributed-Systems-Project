@@ -1,21 +1,21 @@
 package com.fh.stationdatacollector;
 
+import com.fh.stationdatacollector.services.DataCollectorService;
 import queue.StationDataCollectorConsumer;
 import queue.StationDataCollectorProducer;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 public class StationDataCollectorApplication {
 
 	public static void main(String[] args) throws Exception {
+		DataCollectorService dataCollectorService = new DataCollectorService();
 
-		StationDataCollectorConsumer consume = new StationDataCollectorConsumer();
-		StationDataCollectorProducer produce = new StationDataCollectorProducer();
+		StationDataCollectorConsumer consume = new StationDataCollectorConsumer(dataCollectorService);
 
 		consume.executeStationDataCollectorQueue();
 
-		produce.executeDataCollectiontoReceiverQueue();
+
+		//produce.executeDataCollectiontoReceiverQueue();
 	}
 
 

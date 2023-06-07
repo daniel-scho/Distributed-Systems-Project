@@ -1,37 +1,54 @@
 package queue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fh.stationdatacollector.dto.Station;
+import com.fh.stationdatacollector.services.DataCollectorService;
 import com.rabbitmq.client.*;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.concurrent.TimeoutException;
 
 public class StationDataCollectorConsumer {
-    private final String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollectorQueue";
+    private final String QUEUE_TO_STATION_DATA_COLLECTOR = "StationDataCollector";
+    private Channel channel;
+    private DataCollectorService dataCollectorService;
+    public StationDataCollectorConsumer(DataCollectorService dataCollectorService) throws IOException, TimeoutException {
+        this.dataCollectorService = dataCollectorService;
 
-    public void executeStationDataCollectorQueue() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         factory.setPort(30003);
 
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        this.channel = connection.createChannel();
 
-        // Deklarieren der Queue für den Station Data Collector
-        channel.queueDeclare(QUEUE_TO_STATION_DATA_COLLECTOR, false, false, false, null);
+        channel.queueDeclare(QUEUE_TO_STATION_DATA_COLLECTOR, true, false, false, null);
+    }
+
+    public void executeStationDataCollectorQueue() throws Exception {
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
-        // Erstellen eines Consumers, um Nachrichten zu empfangen
         com.rabbitmq.client.Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
                     throws java.io.IOException {
                 String message = new String(body, StandardCharsets.UTF_8);
                 System.out.println("Received message from Station Data Collector: '" + message + "'");
-                // Weitere Verarbeitung der Nachricht hier möglich
+                ObjectMapper objectMapper = new ObjectMapper();
+                Station station = objectMapper.readValue(message, Station.class);
+
+                try {
+                    dataCollectorService.processStation(station, 1);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
 
-        // Registrieren des Consumers, um Nachrichten von der Queue zu empfangen
         channel.basicConsume(QUEUE_TO_STATION_DATA_COLLECTOR, true, consumer);
+        //return station[0];
     }
 
 }
