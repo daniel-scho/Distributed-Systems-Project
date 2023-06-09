@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.fh.gui.FuelStationController">
+        <Label text="Fuel Station 1">
+            <font>
+                <Font name="System Bold" size="25.0" />
+            </font></Label>
+
+
+        <VBox alignment="CENTER" prefHeight="160.0" prefWidth="407.0">
+
+            <Label text="Enter your customer Id" />
+
+            <TextField fx:id="customerIdField" />
+
+            <Label fx:id="getButtonLabel" />
+            <Button onAction="#onGetPdf" text="Get Invoice" />
+
+            <Label fx:id="postButtonLabel" />
+            <Button onAction="#sendData" text="Get PDF!" />
+        </VBox>
+
+    </VBox>
