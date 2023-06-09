@@ -4,9 +4,9 @@ package com.fh.startapp.queue;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class Send {
     private final String QUEUE_DCD = "DataCollectionDispatcher";
 

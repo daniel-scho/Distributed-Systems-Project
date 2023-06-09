@@ -39,11 +39,12 @@ public class FuelStationController {
 
     @FXML
     protected void sendData() throws IOException, InterruptedException, URISyntaxException {
+        String customerId = customerIdField.getText();
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(URI))
-                .GET()
+                .uri(new URI(URI + customerId))
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());

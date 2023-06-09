@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class    InvoiceController {
+public class InvoiceController {
     private Send queueSender;
+
 
     @Autowired
     public InvoiceController(Send queueSender) {
@@ -21,6 +22,7 @@ public class    InvoiceController {
      */
     @PostMapping("/invoices/{customer_id}")
     public String processInvoice(@PathVariable("customer_id") String customerId) {
+        System.out.println("Received Customer ID: " + customerId );
         try {
             queueSender.executeSendQueue(customerId);
             return "Invoice processing initiated for Customer ID: " + customerId;
