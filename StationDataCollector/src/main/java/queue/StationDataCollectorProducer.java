@@ -1,52 +1,44 @@
 package queue;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fh.stationdatacollector.dto.Customer;
+import com.fh.stationdatacollector.services.DataCollectorService;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
 public class StationDataCollectorProducer {
-    private final String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectiontoReceiverQueue";
-
-    public StationDataCollectorProducer() {
-    }
-
-    public void executeDataCollectiontoReceiverQueue() throws Exception {
+    private final String QUEUE_COLLECTOR_TO_RECEIVER = "DataCollectionReceiverFromCollector";
+    private Channel channel;
+    private Connection connection;
+    public StationDataCollectorProducer() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         factory.setPort(30003);
 
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        connection = factory.newConnection();
+        channel = connection.createChannel();
 
-        // Deklarieren der Queue für die Kommunikation mit dem DataCollectionReceiver
         channel.queueDeclare(QUEUE_COLLECTOR_TO_RECEIVER, false, false, false, null);
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        System.out.println(" [*] Waiting for messages.");
+    }
 
-        // Sammeln der Daten für einen bestimmten Kunden von einer bestimmten Ladestation
-        String customerId = "123456"; // Kunden-ID
-        int chargingStationId = 1; // Ladestation-ID
+    public void sendToDataCollectionReceiver(Customer customer) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        String data = gatherData(customerId, chargingStationId);
+        String jsonCustomer = objectMapper.writeValueAsString(customer);
 
-        // Senden der Daten an den DataCollectionReceiver
-        sendToDataCollectionReceiver(channel, data);
+        byte[] CustomerBytes = jsonCustomer.getBytes();
+
+        channel.basicPublish("", QUEUE_COLLECTOR_TO_RECEIVER, null, CustomerBytes);
+        System.out.println(" [x] Sent Data of CustomerID '" + customer.customer_id + "' to DataCollectionReceiver");
 
         channel.close();
         connection.close();
     }
 
-    private  String gatherData(String customerId, int chargingStationId) {
-        // Hier können die Daten für den Kunden von der Ladestation gesammelt werden
-        // Dummy-Daten für Beispielzwecke
-        String data = "Data for Customer " + customerId + " from Charging Station " + chargingStationId;
-        return data;
-    }
-
-    private void sendToDataCollectionReceiver(Channel channel, String data) throws Exception {
-        // Senden der Daten an den DataCollectionReceiver
-        channel.basicPublish("", QUEUE_COLLECTOR_TO_RECEIVER, null, data.getBytes());
-        System.out.println(" [x] Sent to DataCollectionReceiver: '" + data + "'");
-    }
 }
-

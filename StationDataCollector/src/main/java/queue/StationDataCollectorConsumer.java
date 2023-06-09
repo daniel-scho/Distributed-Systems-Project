@@ -28,8 +28,6 @@ public class StationDataCollectorConsumer {
     }
 
     public void executeStationDataCollectorQueue() throws Exception {
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-
         com.rabbitmq.client.Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
@@ -40,15 +38,16 @@ public class StationDataCollectorConsumer {
                 Station station = objectMapper.readValue(message, Station.class);
 
                 try {
-                    dataCollectorService.processStation(station, 1);
+                    dataCollectorService.processStation(station);
                 } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         };
 
         channel.basicConsume(QUEUE_TO_STATION_DATA_COLLECTOR, true, consumer);
-        //return station[0];
     }
 
 }

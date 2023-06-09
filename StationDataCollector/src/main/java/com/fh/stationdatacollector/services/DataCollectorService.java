@@ -1,19 +1,19 @@
 package com.fh.stationdatacollector.services;
 
+import com.fh.stationdatacollector.dto.Customer;
 import com.fh.stationdatacollector.dto.Station;
-
-import java.sql.SQLException;
+import queue.StationDataCollectorProducer;
 
 public class DataCollectorService {
-    public void processStation(Station station, int customerId) throws SQLException {
+    public void processStation(Station station) throws Exception {
         Database database = new Database(station.dbURL);
 
         DatabaseQueryExecuter dbClient = new DatabaseQueryExecuter(database);
 
-        dbClient.getCustomer(customerId);
+        Customer customer = dbClient.getCustomer(station.customer_id);
 
-        //StationDataCollectorProducer produce = new StationDataCollectorProducer();
+        StationDataCollectorProducer producer = new StationDataCollectorProducer();
 
-        //produce.executeDataCollectiontoReceiverQueue();
+        producer.sendToDataCollectionReceiver(customer);
     }
 }

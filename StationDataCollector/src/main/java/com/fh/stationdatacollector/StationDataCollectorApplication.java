@@ -12,10 +12,13 @@ public class StationDataCollectorApplication {
 
 		StationDataCollectorConsumer consume = new StationDataCollectorConsumer(dataCollectorService);
 
-		consume.executeStationDataCollectorQueue();
+		System.out.println(" [*] Waiting for messages.");
 
+		while(true) {
+			consume.executeStationDataCollectorQueue();
 
-		//produce.executeDataCollectiontoReceiverQueue();
+		}
+
 	}
 
 

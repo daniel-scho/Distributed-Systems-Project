@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 public class Queue {
     private final static String QUEUE_IN = "DataCollectionDispatcher";
     private final static String QUEUE_SDC = "StationDataCollector";
-    private final static String QUEUE_DCR = "DataCollectionReceiver";
+    private final static String QUEUE_DCR = "DataCollectionReceiverFromDispatcher";
 
     private DatabaseQueryExecuter db;
     public Queue(Database database) throws SQLException {
@@ -37,33 +37,37 @@ public class Queue {
         System.out.println(" [* Data Collection Dispatcher Service *] Waiting for messages");
 
         while(true) {
-            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), "UTF-8");
-                System.out.println(" [x] Received '" + message + "'");
-                List<Station> stations = db.getAllStations();
-                int stationsAmount = stations.size();
+            com.rabbitmq.client.Consumer handleMessage = new DefaultConsumer(consumeChannel) {
 
-                ObjectMapper mapper = new ObjectMapper();
+                @Override
+                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
+                        throws java.io.IOException {
+                    String customer_id = new String(body, "UTF-8");
+                    System.out.println(" [x] Received '" + customer_id + "'");
+                    List<Station> stations = db.getAllStations();
+                    int stationsAmount = stations.size();
 
-                for (Station station : stations) {
-                    String json = mapper.writeValueAsString(station);
+                    ObjectMapper mapper = new ObjectMapper();
 
-                    publishChannelSDC.basicPublish("", QUEUE_SDC, MessageProperties.PERSISTENT_BASIC, json.getBytes());
-                    String entry = String.format(" [x] Sent: \n" +
-                            "   ID: %d, DB URL: %s, Latitude: %.6f, Longitude: %.6f to " + QUEUE_SDC,
-                            station.id, station.dbURL, station.lat, station.lng);
-                    System.out.println(entry);
+                    for (Station station : stations) {
+                        station.customer_id = Integer.parseInt(customer_id); // The customer_id gets added to the station so StationDataCollector has the customer_id
+                        String json = mapper.writeValueAsString(station);
 
-                }
-                String sendMessage = Integer.toString(stationsAmount);
+                        publishChannelSDC.basicPublish("", QUEUE_SDC, MessageProperties.PERSISTENT_BASIC, json.getBytes());
+                        String entry = String.format(" [x] Sent: \n" +
+                                        "   ID: %d, DB URL: %s, Latitude: %.6f, Longitude: %.6f to " + QUEUE_SDC,
+                                station.id, station.dbURL, station.lat, station.lng);
+                        System.out.println(entry);
 
-                publishChannelDCR.basicPublish("", QUEUE_DCR, null, sendMessage.getBytes(StandardCharsets.UTF_8));
-                System.out.println(" [x] Sent '" + sendMessage + "' to " + QUEUE_DCR);
+                    }
+                    String sendMessage = Integer.toString(stationsAmount);
 
+                    publishChannelDCR.basicPublish("", QUEUE_DCR, null, sendMessage.getBytes(StandardCharsets.UTF_8));
+                    System.out.println(" [x] Sent '" + sendMessage + "' to " + QUEUE_DCR);
+
+                };
             };
-
-            consumeChannel.basicConsume(QUEUE_IN, true, deliverCallback, consumerTag -> {
-            });
+            consumeChannel.basicConsume(QUEUE_IN, true, handleMessage);
         }
     }
 }

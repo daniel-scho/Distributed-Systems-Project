@@ -11,6 +11,8 @@ public class Station {
         this.lng = lng;
     }
 
+    @JsonProperty("customer_id")
+    public int customer_id;
     @JsonProperty("id")
     public int id;
     @JsonProperty("dbURL")

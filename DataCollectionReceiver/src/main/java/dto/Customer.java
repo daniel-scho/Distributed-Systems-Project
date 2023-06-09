@@ -1,4 +1,4 @@
-package com.fh.stationdatacollector.dto;
+package dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,8 +7,10 @@ import java.util.List;
 
 public class Customer {
 
-    public Customer(int customer_id) {
+    public Customer(@JsonProperty("id") int customer_id,
+                    @JsonProperty("chargedKWH") List<Double> chargedKWH) {
         this.customer_id = customer_id;
+        this.chargedKWH = chargedKWH;
     }
     @JsonProperty("customer_id")
     public int customer_id;
