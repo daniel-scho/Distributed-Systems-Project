@@ -81,7 +81,6 @@ public class DataCollectionReceiverConsumer {
     }
     private void isDataComplete() throws Exception {
         if (expectedMessagesAmount == receivedMessagesAmount) {
-
             this.receiverService.sendToPDFGenerator(this.customer);
             resetJob();
         }

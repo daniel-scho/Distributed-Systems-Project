@@ -11,15 +11,12 @@ import java.io.IOException;
 public class PDFGeneratorService {
 
     public void generateAndSavePDF(String customerData) {
-        // Hier kannst du die Logik zum Generieren der PDF basierend auf den JSON-Daten implementieren
-        // In diesem Beispiel wird das JSON einfach in den PDF-Inhalt geschrieben und im Dateisystem gespeichert
-
         try {
             // Erstellen eines neuen PDF-Dokuments
             Document document = new Document();
 
             // Definieren des Dateinamens für die gespeicherte PDF
-            String fileName = "Invoice.pdf";
+            String fileName = "..\\Invoice.pdf";
 
             // Erstellen einer PdfWriter-Instanz, um das Dokument in eine PDF-Datei zu schreiben
             PdfWriter.getInstance(document, new FileOutputStream(fileName));

@@ -10,16 +10,23 @@ import java.nio.charset.StandardCharsets;
 public class PDFGeneratorConsumer {
     private final static String QUEUE_TO_PDF_GENERATOR = "PDFGeneratorQueue";
 
+    private Channel channel;
+
+    private PDFGeneratorService service;
+
+
     public PDFGeneratorConsumer(PDFGeneratorService pdfGeneratorService) throws Exception {
+        service = pdfGeneratorService;
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         factory.setPort(30003);
 
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        channel = connection.createChannel();
         channel.queueDeclare(QUEUE_TO_PDF_GENERATOR, false, false, false, null);
+    }
 
-
+    public void executeQueue() throws IOException {
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -28,7 +35,7 @@ public class PDFGeneratorConsumer {
                 System.out.println("Received JSON: " + json);
 
                 // Aufruf des PDFGeneratorService, um PDF zu generieren und zu speichern
-                pdfGeneratorService.generateAndSavePDF(json);
+                service.generateAndSavePDF(json);
 
                 // Bestätigung der erfolgreichen Verarbeitung der Nachricht
                 channel.basicAck(envelope.getDeliveryTag(), false);
