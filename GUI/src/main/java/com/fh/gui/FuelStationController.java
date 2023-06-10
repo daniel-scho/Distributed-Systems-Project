@@ -11,12 +11,18 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
+
 public class FuelStationController {
     private String URI = "http://localhost:8080/invoices/";
+    private Timeline sendDataTimeline;
+
     @FXML
     private Label getButtonLabel;
-    @FXML
-    private Label postButtonLabel;
+
     @FXML
     private TextField customerIdField;
 
@@ -29,15 +35,28 @@ public class FuelStationController {
                 .uri(new URI(URI + customerId))
                 .GET()
                 .build();
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String res = response.body();
 
         getButtonLabel.setText(res);
+
+        if (sendDataTimeline != null) {
+            sendDataTimeline.stop();
+        }
+
+        sendDataTimeline = new Timeline(new KeyFrame(Duration.seconds(5), (ActionEvent event) -> {
+            try {
+                sendData();
+            } catch (IOException | InterruptedException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        sendDataTimeline.setCycleCount(Timeline.INDEFINITE);
+        sendDataTimeline.play();
     }
 
-    @FXML
     protected void sendData() throws IOException, InterruptedException, URISyntaxException {
         String customerId = customerIdField.getText();
         HttpClient client = HttpClient.newHttpClient();
@@ -46,11 +65,8 @@ public class FuelStationController {
                 .uri(new URI(URI + customerId))
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String res = response.body();
-
-        postButtonLabel.setText(res);
     }
 }

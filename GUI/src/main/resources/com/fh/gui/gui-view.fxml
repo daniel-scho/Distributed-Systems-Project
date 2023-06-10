@@ -23,8 +23,6 @@
             <Label fx:id="getButtonLabel" />
             <Button onAction="#onGetPdf" text="Get Invoice" />
 
-            <Label fx:id="postButtonLabel" />
-            <Button onAction="#sendData" text="Get PDF!" />
         </VBox>
 
     </VBox>
