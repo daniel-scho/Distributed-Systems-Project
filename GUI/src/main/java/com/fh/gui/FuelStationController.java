@@ -18,7 +18,7 @@ import javafx.util.Duration;
 
 public class FuelStationController {
     private String URI = "http://localhost:8080/invoices/";
-    private Timeline sendDataTimeline;
+    private Timeline getPDFTimeline;
 
     @FXML
     private Label getButtonLabel;
@@ -27,7 +27,7 @@ public class FuelStationController {
     private TextField customerIdField;
 
     @FXML
-    protected void onGetPdf() throws IOException, InterruptedException, URISyntaxException {
+    protected void getPDF() throws IOException, InterruptedException, URISyntaxException {
         String customerId = customerIdField.getText();
         HttpClient client = HttpClient.newHttpClient();
 
@@ -41,22 +41,10 @@ public class FuelStationController {
 
         getButtonLabel.setText(res);
 
-        if (sendDataTimeline != null) {
-            sendDataTimeline.stop();
-        }
 
-        sendDataTimeline = new Timeline(new KeyFrame(Duration.seconds(5), (ActionEvent event) -> {
-            try {
-                sendData();
-            } catch (IOException | InterruptedException | URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }));
-
-        sendDataTimeline.setCycleCount(Timeline.INDEFINITE);
-        sendDataTimeline.play();
     }
 
+    @FXML
     protected void sendData() throws IOException, InterruptedException, URISyntaxException {
         String customerId = customerIdField.getText();
         HttpClient client = HttpClient.newHttpClient();
@@ -68,5 +56,20 @@ public class FuelStationController {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String res = response.body();
+
+        if (getPDFTimeline != null) {
+            getPDFTimeline.stop();
+        }
+
+        getPDFTimeline = new Timeline(new KeyFrame(Duration.seconds(5), (ActionEvent event) -> {
+            try {
+                getPDF();
+            } catch (IOException | InterruptedException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        getPDFTimeline.setCycleCount(Timeline.INDEFINITE);
+        getPDFTimeline.play();
     }
 }

@@ -21,7 +21,7 @@
             <TextField fx:id="customerIdField" />
 
             <Label fx:id="getButtonLabel" />
-            <Button onAction="#onGetPdf" text="Get Invoice" />
+            <Button onAction="#sendData" text="Get Invoice" />
 
         </VBox>
 
