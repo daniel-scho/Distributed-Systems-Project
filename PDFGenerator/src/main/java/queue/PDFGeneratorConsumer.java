@@ -1,7 +1,9 @@
 package queue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
 
+import dto.Customer;
 import service.PDFGeneratorService;
 
 import java.io.IOException;
@@ -33,10 +35,10 @@ public class PDFGeneratorConsumer {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String json = new String(body, StandardCharsets.UTF_8);
                 System.out.println("Received JSON: " + json);
-
+                ObjectMapper objectMapper = new ObjectMapper();
+                Customer customer = objectMapper.readValue(json, Customer.class);
                 // Aufruf des PDFGeneratorService, um PDF zu generieren und zu speichern
-                service.generateAndSavePDF(json);
-
+                service.generateAndSavePDF(customer);
                 // Bestätigung der erfolgreichen Verarbeitung der Nachricht
                 channel.basicAck(envelope.getDeliveryTag(), false);
             }
