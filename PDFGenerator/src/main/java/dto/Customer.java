@@ -9,8 +9,10 @@ import java.util.List;
 
 public class Customer {
 
-    public Customer(int customer_id) {
+    public Customer(@JsonProperty("id") int customer_id,
+                    @JsonProperty("chargedKWH") List<Double> chargedKWH) {
         this.customer_id = customer_id;
+        this.chargedKWH = chargedKWH;
     }
     @JsonProperty("customer_id")
     public int customer_id;
@@ -33,10 +35,9 @@ public class Customer {
     @Override
     public String toString() {
         try {
-            return "Customer {" +
-                    "customer_id=" + customer_id +
-                    ", SumchargedKWH=" + sumKWHAsJson() +
-                    '}';
+            return "Customer ID: " + customer_id +
+                    "\nKWH charged list: " + chargedKWH +
+                    "\nSum of the KWH = " + sumKWHAsJson();
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
