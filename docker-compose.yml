@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   station-db:
-    build: station_db/.
+    build: stations_db/.
     ports:
       - '30002:5432'
     environment:

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/DistributedSystemsProject.iml" filepath="$PROJECT_DIR$/.idea/DistributedSystemsProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StationDataCollector/StationDataCollector.iml" filepath="$PROJECT_DIR$/StationDataCollector/StationDataCollector.iml" />
+    </modules>
+  </component>
+</project>

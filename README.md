@@ -1,6 +1,7 @@
 # Distributed Systems Semester Project
-An example setup for a Distributed Systems project. It contains five databases (PostgreSQL) with example data and a messaging queue (RabbitMQ).
+A setup for a Distributed Systems project. It contains five databases (PostgreSQL) with data, a REST API (Springboot) and a messaging queue (RabbitMQ).
 
+![](documentation/diagram.drawio.png)
 ## Services
 - Customer Database
 	- Contains customer data (id, first name, last name)

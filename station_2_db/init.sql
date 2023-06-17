@@ -4,10 +4,10 @@ CREATE DATABASE stationdb;
 CREATE TABLE IF NOT EXISTS charge (
    id SERIAL PRIMARY KEY,
    kwh REAL NOT NULL,
-   customer_id INTEGER NOT_NULL
+   customer_id INTEGER NOT NULL
 );
 
-INSERT INTO customer(id, kwh, customer_id)
+INSERT INTO charge(id, kwh, customer_id)
 VALUES 
    (1, '48.2', 3),
    (2, '40.5', 3),
