@@ -16,12 +16,12 @@
 
         <VBox alignment="CENTER" prefHeight="160.0" prefWidth="407.0">
 
-            <Label text="Enter your customer Id" />
+            <Label text="Enter your customer ID" />
 
             <TextField fx:id="customerIdField" />
 
-            <Label fx:id="getButtonLabel" />
-            <Button onAction="#sendData" text="Get Invoice" />
+            <Label fx:id="notificationLabel" />
+            <Button onAction="#sendData" text="Generate  Invoice" />
 
         </VBox>
 

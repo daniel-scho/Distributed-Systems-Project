@@ -16,10 +16,6 @@ public class StationDataCollectorApplication {
 
 		while(true) {
 			consume.executeStationDataCollectorQueue();
-
 		}
-
 	}
-
-
 }

@@ -1,9 +1,6 @@
 package queue;
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fh.stationdatacollector.dto.Customer;
-import com.fh.stationdatacollector.services.DataCollectorService;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
@@ -40,5 +37,4 @@ public class StationDataCollectorProducer {
         channel.close();
         connection.close();
     }
-
 }

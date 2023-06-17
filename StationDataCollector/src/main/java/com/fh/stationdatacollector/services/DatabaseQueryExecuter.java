@@ -1,11 +1,7 @@
 package com.fh.stationdatacollector.services;
 
 import com.fh.stationdatacollector.dto.Customer;
-import com.fh.stationdatacollector.dto.Station;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseQueryExecuter {
     private Connection connection;
@@ -15,26 +11,26 @@ public class DatabaseQueryExecuter {
     }
 
     public Customer getCustomer(int customerId) {
-        String query = "SELECT * FROM charge where customer_id = " + customerId;
+        String query = "SELECT * FROM charge WHERE customer_id = ?";
         Customer customer = new Customer(customerId);
 
-        try (
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-        ) {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                double kwh = rs.getDouble("kwh");
-                // int id = rs.getInt("customer_id");
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, customerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    double kwh = rs.getDouble("kwh");
+                    // int customer_id = rs.getInt("customer_id");
 
-                customer.chargedKWH.add(kwh);
+                    customer.chargedKWH.add(kwh);
+                }
+                System.out.println(customer.chargedKWH);
+
             }
-            System.out.println(customer.chargedKWH);
-
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return customer;
     }
+
 }

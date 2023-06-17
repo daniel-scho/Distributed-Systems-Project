@@ -1,26 +1,33 @@
 package com.fh.startapp.controller;
 
-
 import com.fh.startapp.queue.Send;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 public class InvoiceController {
     private Send queueSender;
-
 
     @Autowired
     public InvoiceController(Send queueSender) {
         this.queueSender = queueSender;
     }
 
-
     /**
      * @param customer_id
-     * This route checks for the path of the Invoice PDF
+     * This route starts the data gathering job
+     * and deletes the existing Invoice.pdf if existing
      */
     @PostMapping("/invoices/{customer_id}")
     public String processInvoice(@PathVariable("customer_id") String customerId) {
@@ -36,23 +43,36 @@ public class InvoiceController {
 
     /**
      * @param customer_id
-     * This route starts the data gathering job
+     * This route checks for the path of the Invoice PDF
+     * and sends the PDF
      */
-
-
-
     @GetMapping("/invoices/{customer_id}")
-    public String getInvoicePDFPath(@PathVariable("customer_id") String customerId) {
-        String fileName = "Invoice.pdf"; // Der Name der Datei, deren Pfad zurückgegeben werden soll
-        String projectPath = System.getProperty("user.dir"); // Der Pfad zum Projektordner
+    public ResponseEntity<Resource> getInvoicePDFPath(@PathVariable("customer_id") String customerId) {
+        String fileName = "Invoice.pdf";
 
-        String filePath = projectPath + File.separator + fileName;
+        String filePath = "..\\" + File.separator + fileName;
         File invoiceFile = new File(filePath);
 
         if (invoiceFile.exists()) {
-            return filePath;
+            try {
+                Path path = invoiceFile.toPath();
+
+                ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+
+                return ResponseEntity.ok()
+                        .headers(headers)
+                        .contentLength(invoiceFile.length())
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .body(resource);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
         } else {
-            return "Die Datei existiert nicht.";
+            System.out.println("Invoice not found");
+            return ResponseEntity.notFound().build();
         }
     }
 }

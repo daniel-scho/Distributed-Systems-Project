@@ -13,10 +13,9 @@ public class DataCollectionReceiverConsumer {
     private final String QUEUE_FROM_DISPATCHER = "DataCollectionReceiverFromDispatcher";
     private final String QUEUE_FROM_COLLECTOR = "DataCollectionReceiverFromCollector";
 
-    int expectedMessagesAmount = 0;
-    int receivedMessagesAmount = 0;
-
-    Customer customer = null;
+    public int expectedMessagesAmount = 0;
+    public int receivedMessagesAmount = 0;
+    public Customer customer = null;
 
     public DataCollectionReceiverConsumer(CollectionReceiverService receiverService) throws IOException, TimeoutException {
         this.receiverService = receiverService;
@@ -85,7 +84,7 @@ public class DataCollectionReceiverConsumer {
             resetJob();
         }
     }
-    private void resetJob() {
+    public void resetJob() {
         expectedMessagesAmount = 0;
         receivedMessagesAmount = 0;
         this.customer = null;
